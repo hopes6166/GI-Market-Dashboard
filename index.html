@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thị trường bảo hiểm phi nhân thọ Việt Nam | Vietnam Non-life Insurance Market</title>
-<meta name="description" content="Dashboard thị trường bảo hiểm phi nhân thọ Việt Nam 2013–2025: doanh thu, xếp hạng, bồi thường, tái bảo hiểm.">
+<title>Vietnam Non-life Insurance Market | Thị trường bảo hiểm phi nhân thọ Việt Nam</title>
+<meta name="description" content="Vietnam non-life insurance market dashboard 2013–2025: premium, rankings, claims, reinsurance.">
 <style>
 :root {
   --font-anthropic-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -89,12 +89,12 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
   @media print { .vn-sec[hidden] { display: block !important; } .vn-tabs, .vn-lang { display: none; } .vn-sec { break-before: page; } }
 </style>
 
-<div class="vn">
+<div class="vn lang-en">
   <div class="vn-head">
     <h1 class="vn-title" id="title"><span class="t-vi">Thị trường bảo hiểm phi nhân thọ Việt Nam</span><span class="t-en">Vietnam Non-life Insurance Market</span></h1>
-    <div class="vn-lang" id="language" role="group" aria-label="Ngôn ngữ / Language">
-      <button type="button" data-lang="vi" aria-pressed="true"><span class="vn-flag">VI</span>Tiếng Việt</button>
-      <button type="button" data-lang="en" aria-pressed="false"><span class="vn-flag">EN</span>English</button>
+    <div class="vn-lang" id="language" role="group" aria-label="Language / Ngôn ngữ">
+      <button type="button" data-lang="en" aria-pressed="true"><span class="vn-flag">EN</span>English</button>
+      <button type="button" data-lang="vi" aria-pressed="false"><span class="vn-flag">VI</span>Tiếng Việt</button>
     </div>
   </div>
   <p class="vn-lead t-vi" id="lead">Năm <b data-draw="kv" data-source="kpi" data-field="year" data-row="0" data-fmt="raw">—</b>, phí bảo hiểm gốc toàn thị trường đạt <b data-draw="kv" data-source="kpi" data-field="dwp" data-row="0" data-fmt="n0">—</b> tỷ đồng<span class="g-yes"> (tăng trưởng <b data-draw="kv" data-source="kpi" data-field="growth" data-row="0" data-fmt="sp1" data-good="up">—</b> so với năm trước)</span>. <b data-draw="kv" data-source="rank_tbl" data-field="company" data-row="0" data-fmt="raw">—</b> dẫn đầu với <b data-draw="kv" data-source="rank_tbl" data-field="share" data-row="0" data-fmt="p1">—</b> thị phần; tỷ lệ bồi thường gốc toàn thị trường là <b data-draw="kv" data-source="kpi" data-field="lr_direct" data-row="0" data-fmt="p1">—</b>.</p>
@@ -322,7 +322,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
 
 
 </div>
-<p class="vn-site-foot">Dữ liệu cập nhật: 19/11/2026 · Data as of 19 Nov 2026</p>
+<p class="vn-site-foot">Data as of 19 Nov 2026 · Dữ liệu cập nhật: 19/11/2026</p>
 <script type="text/csv" data-id="company_year">
 year,company,direct_premium,gross_written_premium,net_premium,ceded_premium,ceded_ovs_premium,direct_claims,net_claims,ceded_claims,is_fdi,peer_japan
 2013,AAA,529024,538282,499156,34732,27479,204477,176677,42623,0,0
@@ -4904,11 +4904,11 @@ window.dash = (function () {
   const src = {};
   document.querySelectorAll('script[type="text/csv"]').forEach((s) => { src[s.dataset.id] = parseCSV(s.textContent); });
 
-  const DEFAULTS = { year: 2025, line: 'MOTOR', company: 'UIC', lang: 'vi' };
+  const DEFAULTS = { year: 2025, line: 'MOTOR', company: 'UIC', lang: 'en' };
   let params = { ...DEFAULTS };
   try {
     const q = new URLSearchParams(location.search);
-    if (q.get('lang') === 'en') params.lang = 'en';
+    if (q.get('lang') === 'vi') params.lang = 'vi';
     if (q.get('year')) params.year = Number(q.get('year'));
     if (q.get('company')) params.company = q.get('company');
   } catch (e) { /* bỏ qua */ }
@@ -4943,7 +4943,7 @@ window.dash = (function () {
     loader: () => {},
     data,
     params: () => ({ ...params }),
-    setParams: (p) => { params = { ...params, ...p }; cache = {}; schedule(); },
+    setParams: (p) => { params = { ...params, ...p }; cache = {}; document.documentElement.lang = params.lang; schedule(); },
     resetParams: () => { params = { ...DEFAULTS }; cache = {}; schedule(); },
     draw: (name, fn) => { if (typeof fn === 'function') draws[name] = fn; else if (!fn) redraw(name); },
     onData: (fn) => { onDataFns.push(fn); },
